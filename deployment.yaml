@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydockservice
+  namespace: mydock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      bb: myservice
+  template:
+    metadata:
+      labels:
+        bb: myservice
+    spec:
+      containers:
+      - name: mydockservice
+        image: ptatv/mydockservice:latest
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://*:80"
+        - name: Instance__Id
+          value: "123"
+
+
+
+# minikube service mydockservice-entrypoint -n mydock
+# kubectl delete deployment mydockservice -n mydock
+# kubectl delete service mydockservice-entrypoint -n mydock
